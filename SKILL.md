@@ -48,7 +48,14 @@ The output of this skill is a review the user can act on, not a rewrite.
    are always listed by the script, because `git diff` never
    includes them: in worktree mode they are also shown in full, in
    range mode they are named separately, outside the range. Review
-   them as part of the change. Files excluded by `.gitignore` are
+   them as part of the change. In range mode that means opening
+   each named file yourself: read it in full, unless it is binary
+   or very large, in which case report what it is and that its
+   contents were not reviewed. If a named file might hold secrets,
+   do not quote its contents into the report; name the risk
+   instead. A review that never opened a named untracked file is
+   incomplete, and the report must say so. Files excluded by
+   `.gitignore` are
    never collected, so keep secrets and local configuration ignored.
    If it
    prints `NO_CHANGES`, there is nothing to review: say so in one
