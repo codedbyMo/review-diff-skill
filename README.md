@@ -28,9 +28,13 @@ in `SKILL.md`.
 
 - Format validated with the official `skills-ref` validator
   (`agentskills validate`): "Valid skill: review-diff".
-- The collector script was exercised on November 3, 2026 across a
-  nine-case matrix (clean tree, staged only, unstaged only, untracked
-  only, mixed, invalid ref, committed range, range with untracked
-  files present, outside any repo). All cases behaved as documented,
-  including the untracked-only case, which lists and shows the new
-  files instead of reporting no changes.
+- The collector script was exercised on November 12, 2026 across a
+  fourteen-case matrix (clean tree, staged only, unstaged only,
+  untracked only, committed range, range with untracked files, a
+  zero-diff range with untracked files only, a zero-diff range with
+  nothing, invalid ref, outside any repo, a binary file, a
+  200,000-line file, a gitignored secrets file, and the same file
+  un-ignored). All cases behaved as documented: a zero-diff range no
+  longer reports NO_CHANGES while untracked files exist, files
+  excluded by .gitignore are never collected, and binary files are
+  reported as differing without dumping raw bytes.

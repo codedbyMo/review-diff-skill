@@ -28,17 +28,22 @@ if [ $# -ge 1 ]; then
   scope="$base...HEAD"
   label="committed changes in $base...HEAD (merge base to HEAD)"
   stat="$(git diff --stat "$scope")"
-  if [ -z "$stat" ]; then
-    echo "NO_CHANGES: no diff for $label."
+  if [ -z "$stat" ] && [ -z "$untracked" ]; then
+    echo "NO_CHANGES: no diff for $label and no untracked files."
     exit 0
   fi
   echo "## Scope: $label"
-  echo
-  echo "## Changed files"
-  echo "$stat"
-  echo
-  echo "## Full diff"
-  git diff "$scope"
+  if [ -n "$stat" ]; then
+    echo
+    echo "## Changed files"
+    echo "$stat"
+    echo
+    echo "## Full diff"
+    git diff "$scope"
+  else
+    echo
+    echo "No committed diff for $label."
+  fi
   if [ -n "$untracked" ]; then
     echo
     echo "## Untracked files (in the working tree, NOT part of the range above)"

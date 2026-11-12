@@ -45,8 +45,12 @@ The output of this skill is a review the user can act on, not a rewrite.
 
    The script prints `NO_CHANGES` only when there is genuinely
    nothing: no tracked diff and no untracked files. Untracked files
-   are listed and shown in full by the script, because `git diff`
-   never includes them; review them as part of the change. If it
+   are always listed by the script, because `git diff` never
+   includes them: in worktree mode they are also shown in full, in
+   range mode they are named separately, outside the range. Review
+   them as part of the change. Files excluded by `.gitignore` are
+   never collected, so keep secrets and local configuration ignored.
+   If it
    prints `NO_CHANGES`, there is nothing to review: say so in one
    line and stop.
 
